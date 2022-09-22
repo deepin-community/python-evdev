@@ -1,0 +1,4 @@
+# The docs include information obtained from the module, in a
+# potentially arch-dependent way
+documentation-package-not-architecture-independent
+package-contains-no-arch-dependent-files

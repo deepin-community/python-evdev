@@ -1,0 +1,14 @@
+Description: Move the manpage to section 7
+Author: Stephen Kitt <skitt@debian.org>
+
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -230,7 +230,7 @@
+ # (source start file, name, description, authors, manual section).
+ man_pages = [
+     ('index', 'python-evdev', u'python-evdev Documentation',
+-     [u'Georgi Valkov'], 1)
++     [u'Georgi Valkov'], 7)
+ ]
+ 
+ # If true, show URL addresses after external links.
