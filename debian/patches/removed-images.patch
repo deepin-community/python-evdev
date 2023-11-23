@@ -1,5 +1,6 @@
 Description: Adjust documentation after removing logos
 Author: Stephen Kitt <skitt@debian.org>
+Forwarded: not-needed
 
 --- a/docs/install.rst
 +++ b/docs/install.rst

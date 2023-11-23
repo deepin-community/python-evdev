@@ -1,3 +1,29 @@
+python-evdev (1.6.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Our patches are Debian-specific, mark them as not needing
+    forwarding.
+
+ -- Stephen Kitt <skitt@debian.org>  Tue, 24 Jan 2023 18:15:43 +0100
+
+python-evdev (1.6.0+dfsg-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster:
+    + Build-Depends: Drop versioned constraint on dh-python.
+
+  [ Stephen Kitt ]
+  * New upstream release.
+
+ -- Stephen Kitt <skitt@debian.org>  Mon, 15 Aug 2022 11:35:04 +0200
+
+python-evdev (1.5.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release
+  * Standards-Version 4.6.1, no change required.
+
+ -- Stephen Kitt <skitt@debian.org>  Sat, 28 May 2022 13:53:11 +0200
+
 python-evdev (1.4.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release.
