@@ -123,16 +123,15 @@ Reading events (using :mod:`asyncio`)
 ::
 
     >>> import asyncio
-    >>> from evdev import InputDevice, categorize, ecodes
+    >>> from evdev import InputDevice
 
     >>> dev = InputDevice('/dev/input/event1')
 
-    >>> async def helper(dev):
+    >>> async def main(dev):
     ...     async for ev in dev.async_read_loop():
     ...         print(repr(ev))
 
-    >>> loop = asyncio.get_event_loop()
-    >>> loop.run_until_complete(helper(dev))
+    >>> asyncio.run(main(dev))
     InputEvent(1527363738, 348740, 4, 4, 458792)
     InputEvent(1527363738, 348740, 1, 28, 0)
     InputEvent(1527363738, 348740, 0, 0, 0)
@@ -175,14 +174,14 @@ This can also be achieved using the :mod:`selectors` module in Python 3.4:
    from evdev import InputDevice
    from selectors import DefaultSelector, EVENT_READ
 
-   selector = selectors.DefaultSelector()
+   selector = DefaultSelector()
 
-   mouse = evdev.InputDevice('/dev/input/event1')
-   keybd = evdev.InputDevice('/dev/input/event2')
+   mouse = InputDevice('/dev/input/event1')
+   keybd = InputDevice('/dev/input/event2')
 
    # This works because InputDevice has a `fileno()` method.
-   selector.register(mouse, selectors.EVENT_READ)
-   selector.register(keybd, selectors.EVENT_READ)
+   selector.register(mouse, EVENT_READ)
+   selector.register(keybd, EVENT_READ)
 
    while True:
        for key, mask in selector.select():
@@ -290,7 +289,7 @@ Associating classes with event types
 
     >>> from evdev import categorize, event_factory, ecodes
 
-    >>> class SynEvent(object):
+    >>> class SynEvent:
     ...     def __init__(self, event):
     ...         ...
 
@@ -328,6 +327,10 @@ Injecting events (using a context manager)
 
 Specifying ``uinput`` device options
 ====================================
+
+.. note::
+
+   ``ecodes.EV_SYN`` cannot be in the ``cap`` dictionary or the device will not be created.
 
 ::
 
@@ -425,10 +428,11 @@ Injecting an FF-event into first FF-capable device found
 
 ::
 
-    from evdev import ecodes, InputDevice, ff
+    from evdev import ecodes, InputDevice, ff, list_devices
+    import time
 
     # Find first EV_FF capable event device (that we have permissions to use).
-    for name in evdev.list_devices():
+    for name in list_devices():
         dev = InputDevice(name)
         if ecodes.EV_FF in dev.capabilities():
             break
@@ -441,10 +445,11 @@ Injecting an FF-event into first FF-capable device found
         ecodes.FF_RUMBLE, -1, 0,
         ff.Trigger(0, 0),
         ff.Replay(duration_ms, 0),
-        ff.EffectType(ff_rumble_effect=rumble)
+        effect_type
     )
 
     repeat_count = 1
     effect_id = dev.upload_effect(effect)
-    dev.write(e.EV_FF, effect_id, repeat_count)
+    dev.write(ecodes.EV_FF, effect_id, repeat_count)
+    time.sleep(duration_ms)
     dev.erase_effect(effect_id)

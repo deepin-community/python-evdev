@@ -1,5 +1,6 @@
 Description: Skip tests requiring root
 Author: Stephen Kitt <skitt@debian.org>
+Forwarded: not-needed
 
 --- a/tests/test_uinput.py
 +++ b/tests/test_uinput.py

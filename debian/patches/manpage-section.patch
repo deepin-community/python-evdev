@@ -1,5 +1,6 @@
 Description: Move the manpage to section 7
 Author: Stephen Kitt <skitt@debian.org>
+Forwarded: not-needed
 
 --- a/docs/conf.py
 +++ b/docs/conf.py

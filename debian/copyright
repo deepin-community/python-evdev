@@ -4,11 +4,11 @@ Source: https://github.com/gvalkov/python-evdev
 Files-Excluded: docs/_static/github-logo.png docs/_static/pacifica-icon-set
 
 Files: *
-Copyright: 2012-2021 Georgi Valkov
+Copyright: 2012-2023 Georgi Valkov
 License: BSD-3
 
 Files: debian/*
-Copyright: 2017-2021 Stephen Kitt <skitt@debian.org>
+Copyright: 2017-2023 Stephen Kitt <skitt@debian.org>
 License: BSD-3
 
 License: BSD-3

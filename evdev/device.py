@@ -4,7 +4,6 @@ import os
 import warnings
 import contextlib
 import collections
-import threading
 
 from evdev import _input, ecodes, util
 from evdev.events import InputEvent
@@ -158,7 +157,7 @@ class InputDevice(EventIO):
         if hasattr(self, 'fd') and self.fd is not None:
             try:
                 self.close()
-            except OSError:
+            except (OSError, ImportError, AttributeError):
                 pass
 
     def _capabilities(self, absinfo=True):
@@ -283,11 +282,6 @@ class InputDevice(EventIO):
         return isinstance(other, self.__class__) and self.info == other.info \
             and self.path == other.path
 
-    def __ne__(self, other):
-        # Python 2 compatibility. Python 3 automatically negates the value of
-        # __eq__, in case __ne__ is not defined.
-        return not self == other
-
     def __str__(self):
         msg = 'device {}, name "{}", phys "{}"'
         return msg.format(self.path, self.name, self.phys)
@@ -303,9 +297,7 @@ class InputDevice(EventIO):
         if self.fd > -1:
             try:
                 super().close()
-                # avoid blocking at the end of functions when the destructor
-                # is called.
-                threading.Thread(target=os.close, args=(self.fd,)).start()
+                os.close(self.fd)
             finally:
                 self.fd = -1
 
